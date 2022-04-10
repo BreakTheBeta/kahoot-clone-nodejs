@@ -23,9 +23,13 @@ var url = "mongodb://localhost:27017/";
 app.use(express.static(publicPath));
 
 //Starting server on port 3000
-server.listen(3000, () => {
-  console.log("Server started on port 3000");
+server.listen(3030, () => {
+  console.log("Server started on port 3030");
 });
+
+function shockPlayers(playerData) {
+  // TODO implement
+}
 
 //When a connection to server is made from client
 io.on("connection", (socket) => {
@@ -250,6 +254,7 @@ io.on("connection", (socket) => {
               game.gameData.questionLive = false; //Question has been ended bc players all answered under time
               var playerData = players.getPlayers(game.hostId);
               io.to(game.pin).emit("questionOver", playerData, correctAnswer); //Tell everyone that question is over
+              shockPlayers(playerData);
             } else {
               //update host screen of num players answered
               io.to(game.pin).emit("updatePlayersAnswered", {
@@ -297,6 +302,7 @@ io.on("connection", (socket) => {
           if (err) throw err;
           var correctAnswer = res[0].questions[gameQuestion - 1].correct;
           io.to(game.pin).emit("questionOver", playerData, correctAnswer);
+          shockPlayers(playerData);
 
           db.close();
         });

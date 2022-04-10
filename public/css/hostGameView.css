@@ -1,34 +1,57 @@
 #answer1{
     background-color: #4CAF50;
     margin: auto;
-    padding: 30px 20px;
-    height: 50%;
+    height: 150px;
     font-family: 'Raleway', sans-serif;
-    font-size: 20px;
+    font-size: 30px;
+    color: white;
+    width: 50%;
+    float: left;
+    line-height: 150px; 
+    text-align: center;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 #answer2{
     background-color: #f94a1e;
     margin: auto;
-    padding: 30px 20px;
-    height: 50%;
+    height: 150px;
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
+    width: 50%;
+    float: right;
+    line-height: 150px; 
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 #answer3{
     background-color: #3399ff;
     margin: auto;
-    padding: 30px 20px;
-    height: 50%;
+    height: 150px;
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
+    width: 50%;
+    float: left;
+    line-height: 150px; 
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 #answer4{
     background-color: #ff9933;
     margin: auto;
-    padding: 30px 20px;
-    height: 50%;
+    height: 150px;
     font-family: 'Raleway', sans-serif;
     font-size: 20px;
+    width: 50%;
+    float: right;
+    line-height: 150px; 
+    text-align: center;
+    font-size: 30px;
+    color: white;
+    text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000;
 }
 .square{
     border: none;
@@ -58,6 +81,7 @@
 
 #nextQButton{
     display: none;
+    
 }
 #question{
     font-family: 'Raleway', sans-serif;
@@ -110,4 +134,18 @@
     font-size: 35px;
     color: #3399ff;
     display: none;
+}
+button {
+    background-color: #3A3B3A;
+    border: none;
+    color: white;
+    padding: 15px 10px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    display: block;
+    font-size: 25px;
+    font-family: 'Raleway', sans-serif;
 }

@@ -50,6 +50,9 @@ body {
 }
 #gameButton{
     font-size:80px;
+    border-radius: 25px;
+    background-color: honeydew;
+    border: none;
 }
 #gameButton:hover{
     cursor: pointer;
