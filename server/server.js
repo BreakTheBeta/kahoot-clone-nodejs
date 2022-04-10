@@ -19,6 +19,7 @@ var { SerialPort } = require('serialport');
 //Mongodb setup
 var MongoClient = require("mongodb").MongoClient;
 var mongoose = require("mongoose");
+const { init } = require("express/lib/application");
 var url = "mongodb://localhost:27017/";
 
 app.use(express.static(publicPath));
@@ -38,18 +39,42 @@ var arduinoSerialPort = new SerialPort({
     baudRate:9600,
 });
 
+function initPlayer(num){
+      let text = num.toString();
+      arduinoSerialPort.write(text, encoding = 'ascii');
+      // arduinoSerialPort.write("2", encoding = 'ascii');
+      // arduinoSerialPort.write("3", encoding = 'ascii');
+      arduinoSerialPort.write("t");
+      console.log("Hello??");
+}
+
 function shockPlayers(playerData) {
-<<<<<<< HEAD
   console.log(playerData);
-  arduinoSerialPort.write("1", encoding = 'ascii');
-  arduinoSerialPort.write("2", encoding = 'ascii');
-  arduinoSerialPort.write("3", encoding = 'ascii');
-  arduinoSerialPort.write("t");
+  // arduinoSerialPort.write("1", encoding = 'ascii');
+  // arduinoSerialPort.write("2", encoding = 'ascii');
+  // arduinoSerialPort.write("3", encoding = 'ascii');
+  // arduinoSerialPort.write("t");
   
-=======
-  // TODO implement
-  console.log(playerData);
->>>>>>> e8381d2a1ba771272478988b34ed42479ef04fe7
+  for(var i = 0; i < playerData.length; i++){
+    var player = playerData[i];
+
+    var ardo = player.gameData.ardo;
+    var correct = player.gameData.correct;
+
+    if (correct == false){
+      let num = ardo + 1;
+      let text = num.toString();
+      arduinoSerialPort.write(text, encoding = 'ascii');
+      // arduinoSerialPort.write("2", encoding = 'ascii');
+      // arduinoSerialPort.write("3", encoding = 'ascii');
+      arduinoSerialPort.write("t");
+    }
+    
+    console.log(ardo);
+    console.log(correct);
+
+
+  }
 }
 
 //When a connection to server is made from client
@@ -167,7 +192,8 @@ io.on("connection", (socket) => {
           answer: 0,
           ardo: number,
         }); //add player to game
-
+        
+        initPlayer(number + 1);
         socket.join(params.pin); //Player is joining room based on pin
 
         var playersInGame = players.getPlayers(hostId); //Getting all players in game
@@ -269,13 +295,9 @@ io.on("connection", (socket) => {
               player.gameData.correct = true;
               io.to(game.pin).emit("getTime", socket.id);
               socket.emit("answerResult", true);
-<<<<<<< HEAD
-            } 
-=======
             } else {
               player.gameData.correct = false;
             }
->>>>>>> e8381d2a1ba771272478988b34ed42479ef04fe7
 
             //Checks if all players answered
             if (game.gameData.playersAnswered == playerNum.length) {
