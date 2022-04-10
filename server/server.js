@@ -39,12 +39,17 @@ var arduinoSerialPort = new SerialPort({
 });
 
 function shockPlayers(playerData) {
+<<<<<<< HEAD
   console.log(playerData);
   arduinoSerialPort.write("1", encoding = 'ascii');
   arduinoSerialPort.write("2", encoding = 'ascii');
   arduinoSerialPort.write("3", encoding = 'ascii');
   arduinoSerialPort.write("t");
   
+=======
+  // TODO implement
+  console.log(playerData);
+>>>>>>> e8381d2a1ba771272478988b34ed42479ef04fe7
 }
 
 //When a connection to server is made from client
@@ -155,9 +160,12 @@ io.on("connection", (socket) => {
 
         var hostId = games.games[i].hostId; //Get the id of host of game
 
+        var number = players.getPlayers(hostId).length;
+
         players.addPlayer(hostId, socket.id, params.name, {
           score: 0,
           answer: 0,
+          ardo: number,
         }); //add player to game
 
         socket.join(params.pin); //Player is joining room based on pin
@@ -258,16 +266,26 @@ io.on("connection", (socket) => {
             //Checks player answer with correct answer
             if (num == correctAnswer) {
               player.gameData.score += 100;
+              player.gameData.correct = true;
               io.to(game.pin).emit("getTime", socket.id);
               socket.emit("answerResult", true);
+<<<<<<< HEAD
             } 
+=======
+            } else {
+              player.gameData.correct = false;
+            }
+>>>>>>> e8381d2a1ba771272478988b34ed42479ef04fe7
 
             //Checks if all players answered
             if (game.gameData.playersAnswered == playerNum.length) {
               game.gameData.questionLive = false; //Question has been ended bc players all answered under time
               var playerData = players.getPlayers(game.hostId);
               io.to(game.pin).emit("questionOver", playerData, correctAnswer); //Tell everyone that question is over
+
               shockPlayers(playerData);
+
+              player.gameData.correct = false;
             } else {
               //update host screen of num players answered
               io.to(game.pin).emit("updatePlayersAnswered", {
