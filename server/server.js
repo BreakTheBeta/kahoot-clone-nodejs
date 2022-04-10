@@ -14,6 +14,7 @@ var server = http.createServer(app);
 var io = socketIO(server);
 var games = new LiveGames();
 var players = new Players();
+var { SerialPort } = require('serialport');
 
 //Mongodb setup
 var MongoClient = require("mongodb").MongoClient;
@@ -27,8 +28,23 @@ server.listen(3030, () => {
   console.log("Server started on port 3030");
 });
 
+
+var port = 3000;
+
+var arduinoCOMPort = "COM6";
+
+var arduinoSerialPort = new SerialPort({
+    path:arduinoCOMPort,
+    baudRate:9600,
+});
+
 function shockPlayers(playerData) {
-  // TODO implement
+  console.log(playerData);
+  arduinoSerialPort.write("1", encoding = 'ascii');
+  arduinoSerialPort.write("2", encoding = 'ascii');
+  arduinoSerialPort.write("3", encoding = 'ascii');
+  arduinoSerialPort.write("t");
+  
 }
 
 //When a connection to server is made from client
@@ -244,7 +260,7 @@ io.on("connection", (socket) => {
               player.gameData.score += 100;
               io.to(game.pin).emit("getTime", socket.id);
               socket.emit("answerResult", true);
-            }
+            } 
 
             //Checks if all players answered
             if (game.gameData.playersAnswered == playerNum.length) {
