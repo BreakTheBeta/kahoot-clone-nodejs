@@ -29,6 +29,7 @@ server.listen(3030, () => {
 
 function shockPlayers(playerData) {
   // TODO implement
+  console.log(playerData);
 }
 
 //When a connection to server is made from client
@@ -245,8 +246,11 @@ io.on("connection", (socket) => {
             //Checks player answer with correct answer
             if (num == correctAnswer) {
               player.gameData.score += 100;
+              player.gameData.correct = true;
               io.to(game.pin).emit("getTime", socket.id);
               socket.emit("answerResult", true);
+            } else {
+              player.gameData.correct = false;
             }
 
             //Checks if all players answered
@@ -254,7 +258,10 @@ io.on("connection", (socket) => {
               game.gameData.questionLive = false; //Question has been ended bc players all answered under time
               var playerData = players.getPlayers(game.hostId);
               io.to(game.pin).emit("questionOver", playerData, correctAnswer); //Tell everyone that question is over
+
               shockPlayers(playerData);
+
+              player.gameData.correct = false;
             } else {
               //update host screen of num players answered
               io.to(game.pin).emit("updatePlayersAnswered", {
